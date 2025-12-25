@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,34 +8,24 @@
     <link rel="shortcut icon" href="ico.jpg" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Botón de control de música -->
     <div class="music-control" id="musicControl" onclick="toggleMusic()">
         <svg id="playIcon" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
+            <path d="M8 5v14l11-7z" />
         </svg>
         <svg id="pauseIcon" style="display: none;" viewBox="0 0 24 24">
-            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
         </svg>
-    </div>
-
-    <!-- Pantalla de Reloj -->
-    <div class="clock-screen" id="clockScreen">
-        <div class="clock-container">
-            <div class="christmas-tree">🎄</div>
-            <h1>Feliz Nochebuena</h1>
-            <div class="date-display" id="dateDisplay"></div>
-            <div class="clock" id="clock"></div>
-            <div class="countdown-message" id="countdownMessage"></div>
-        </div>
     </div>
 
     <!-- Landing Page -->
-    <div class="landing" id="landing">
+    <div class="landing">
         <div class="christmas-tree">🎄</div>
         <h1>¡Feliz Navidad!</h1>
         <p class="subtitle">Elige una galleta para ver tu mensaje especial</p>
-        
+
         <div class="cookies-container">
             <div class="cookie-btn" onclick="openModal('manuela')">
                 <span>MANUELA</span>
@@ -56,9 +47,13 @@
             <div class="modal-message">
                 <p style="margin-bottom: 20px;">Para ver tu mensaje especial, escribe:</p>
                 <p style="font-weight: bold; color: #c0392b; margin-bottom: 20px;">La última palabra que te dije</p>
-                <input type="password" id="passwordInput" placeholder="Escribe aquí..." style="width: 100%; padding: 15px; font-size: 1.1em; border: 2px solid #ffd700; border-radius: 10px; margin-bottom: 20px; text-align: center;">
-                <button onclick="checkPassword()" style="width: 100%; padding: 15px; font-size: 1.2em; background: linear-gradient(135deg, #c0392b, #e74c3c); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">Entrar 🎁</button>
-                <p id="errorMessage" style="color: #c0392b; margin-top: 15px; font-weight: bold; display: none;">❌ Palabra incorrecta, intenta de nuevo</p>
+                <input type="password" id="passwordInput" placeholder="Escribe aquí..."
+                    style="width: 100%; padding: 15px; font-size: 1.1em; border: 2px solid #ffd700; border-radius: 10px; margin-bottom: 20px; text-align: center;">
+                <button onclick="checkPassword()"
+                    style="width: 100%; padding: 15px; font-size: 1.2em; background: linear-gradient(135deg, #c0392b, #e74c3c); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">Entrar
+                    🎁</button>
+                <p id="errorMessage" style="color: #c0392b; margin-top: 15px; font-weight: bold; display: none;">❌
+                    Palabra incorrecta, intenta de nuevo</p>
             </div>
         </div>
     </div>
@@ -74,170 +69,14 @@
     </div>
 
     <!-- Audio -->
-    <audio id="clockMusic" loop>
-        <source src="VILLANCICOS DE NAVIDAD - DJ JG 🎄🎅🏻⛄ (LOS TORIBIANITOS, NIÑOS CANTONES, LUIS MIGUEL, MARIAH CAREY) [b_YnuHsgxrY].mp3" type="audio/mpeg">
-    </audio>
     <audio id="christmasMusic" loop>
-        <source src="rauw alejandro - aquel nap zzzz tu mi 24 de diciembre (LetraLyrics).mp3" type="audio/mpeg">
-    </audio>
-    <audio id="celebrationMusic">
         <source src="rauw alejandro - aquel nap zzzz tu mi 24 de diciembre (LetraLyrics).mp3" type="audio/mpeg">
     </audio>
 
     <script>
         // Variables globales
-        let fireworksInterval;
-        let celebrationStarted = false;
         let isMusicPlaying = false;
-        let currentMusic = null;
 
-        // Función para controlar la música
-        function toggleMusic() {
-            const clockMusic = document.getElementById('clockMusic');
-            const celebrationMusic = document.getElementById('celebrationMusic');
-            const playIcon = document.getElementById('playIcon');
-            const pauseIcon = document.getElementById('pauseIcon');
-            const musicControl = document.getElementById('musicControl');
-
-            // Determinar qué música está activa
-            if (!celebrationStarted) {
-                currentMusic = clockMusic;
-            } else {
-                currentMusic = celebrationMusic;
-            }
-
-            if (isMusicPlaying) {
-                // Pausar música
-                currentMusic.pause();
-                playIcon.style.display = 'block';
-                pauseIcon.style.display = 'none';
-                musicControl.classList.remove('playing');
-                isMusicPlaying = false;
-            } else {
-                // Reproducir música
-                currentMusic.play();
-                playIcon.style.display = 'none';
-                pauseIcon.style.display = 'block';
-                musicControl.classList.add('playing');
-                isMusicPlaying = true;
-            }
-        }
-
-        // Iniciar música automáticamente (si el navegador lo permite)
-        window.addEventListener('load', function() {
-            const clockMusic = document.getElementById('clockMusic');
-            clockMusic.volume = 0.5;
-            clockMusic.play().then(() => {
-                // Reproducción exitosa
-                isMusicPlaying = true;
-                document.getElementById('playIcon').style.display = 'none';
-                document.getElementById('pauseIcon').style.display = 'block';
-                document.getElementById('musicControl').classList.add('playing');
-            }).catch(function(error) {
-                // Si falla, el usuario puede hacer clic en el botón
-                console.log('Haz clic en el botón de música para reproducir.');
-            });
-        });
-
-        // Función para actualizar el reloj
-        function updateClock() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            
-            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-            
-            // Actualizar fecha
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('dateDisplay').textContent = now.toLocaleDateString('es-ES', options);
-            
-            // Verificar si son las 12:00 del mediodía
-            if (hours === '12' && minutes === '00' && !celebrationStarted) {
-                startCelebration();
-            }
-            
-            // Mostrar mensaje de cuenta regresiva
-            const messageEl = document.getElementById('countdownMessage');
-            if (hours === '12' && minutes === '00') {
-                messageEl.textContent = '🎉 ¡ES HORA DE CELEBRAR! 🎉';
-            } else {
-                const currentTime = now.getHours() * 60 + now.getMinutes();
-                const targetTime = 12 * 60; // 12:00
-                let minutesLeft;
-                
-                if (currentTime < targetTime) {
-                    minutesLeft = targetTime - currentTime;
-                    messageEl.textContent = `⏰ Faltan ${minutesLeft} minutos para la celebración`;
-                } else {
-                    messageEl.textContent = '✨ La celebración ya pasó, pero aún puedes disfrutar ✨';
-                }
-            }
-        }
-
-        // Función para crear fuegos artificiales
-        function createFirework() {
-            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffd700', '#ff6b6b'];
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * (window.innerHeight / 2);
-            
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'firework';
-                particle.style.left = x + 'px';
-                particle.style.top = y + 'px';
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                
-                const angle = (Math.PI * 2 * i) / 30;
-                const velocity = 100 + Math.random() * 100;
-                const tx = Math.cos(angle) * velocity;
-                const ty = Math.sin(angle) * velocity;
-                
-                particle.style.setProperty('--tx', tx + 'px');
-                particle.style.setProperty('--ty', ty + 'px');
-                particle.style.animation = 'explode 1s ease-out forwards';
-                
-                document.body.appendChild(particle);
-                
-                setTimeout(() => particle.remove(), 1000);
-            }
-        }
-
-        // Función para iniciar la celebración
-        function startCelebration() {
-            celebrationStarted = true;
-            
-            // Detener la música del reloj
-            const clockMusic = document.getElementById('clockMusic');
-            clockMusic.pause();
-            clockMusic.currentTime = 0;
-            
-            // Reproducir música de celebración
-            const celebrationMusic = document.getElementById('celebrationMusic');
-            celebrationMusic.volume = 0.7;
-            celebrationMusic.play().then(() => {
-                isMusicPlaying = true;
-                document.getElementById('playIcon').style.display = 'none';
-                document.getElementById('pauseIcon').style.display = 'block';
-                document.getElementById('musicControl').classList.add('playing');
-            });
-            
-            // Crear fuegos artificiales cada 500ms durante 10 segundos
-            fireworksInterval = setInterval(createFirework, 500);
-            
-            setTimeout(() => {
-                clearInterval(fireworksInterval);
-                // Mostrar el landing page después de 10 segundos
-                setTimeout(() => {
-                    document.getElementById('clockScreen').style.display = 'none';
-                    document.getElementById('landing').classList.add('active');
-                }, 2000);
-            }, 10000);
-        }
-
-        // Actualizar reloj cada segundo
-        setInterval(updateClock, 1000);
-        updateClock();
         // Crear copos de nieve
         function createSnowflake() {
             const snowflake = document.createElement('div');
@@ -247,7 +86,7 @@
             snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
             snowflake.style.opacity = Math.random();
             document.body.appendChild(snowflake);
-            
+
             setTimeout(() => {
                 snowflake.remove();
             }, 5000);
@@ -261,7 +100,7 @@
             heart.style.left = Math.random() * 100 + '%';
             heart.style.animationDelay = Math.random() * 2 + 's';
             document.body.appendChild(heart);
-            
+
             setTimeout(() => {
                 heart.remove();
             }, 6000);
@@ -269,6 +108,32 @@
 
         setInterval(createSnowflake, 300);
         setInterval(createHeart, 800);
+
+        // Función para controlar la música
+        function toggleMusic() {
+            const music = document.getElementById('christmasMusic');
+            const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
+            const musicControl = document.getElementById('musicControl');
+
+            if (isMusicPlaying) {
+                music.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                musicControl.classList.remove('playing');
+                isMusicPlaying = false;
+            } else {
+                music.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+                musicControl.classList.add('playing');
+                isMusicPlaying = true;
+            }
+        }
+
+   
+
+
 
         // Mensajes personalizados con contraseñas
         const messages = {
@@ -280,16 +145,16 @@
             lincer: {
                 title: '⭐ Para Lincer 🎄',
                 message: 'Querido Lincer, que esta Navidad llegue a tu vida llena de paz, amor y prosperidad. Que sea un tiempo de verdadera felicidad, pero también un momento de cambio, donde cada acción que realices siembre algo bueno en tu camino y te acerque a tus sueños. Que cada día del nuevo año sea una nueva oportunidad para crecer, aprender y cumplir tus metas.Quiero verte llegar a lo grande, porque sé que tienes todo para lograrlo. Te quiero mucho, hijo.Oro a Dios para verte cumplir cada paso de tu vida y compartir contigo muchos momentos más, muchas Navidades más, llenas de risas, abrazos y bendiciones.Gracias por ser parte tan importante de mi vida. ¡Te deseo una Navidad llena de bendiciones y un próspero Año Nuevo! 🎄✨',
-        password: 'Mi Campeón' // Cambia esta contraseña
+                password: 'Mi Campeón' // Cambia esta contraseña
             },
-        kiara: {
-            title: '🌟 Para Kiara 💫',
+            kiara: {
+                title: '🌟 Para Kiara 💫',
                 message: 'Querida Kiara, que la luz de la Navidad ilumine tu camino y te regale paz, esperanza y muchos motivos para sonreír. Que esta época tan especial te permita compartir momentos lindos con tus seres queridos y que el Año Nuevo llegue lleno de aprendizajes, alegrías y pequeñas victorias que hagan grande tu corazón. Eres una persona maravillosa y mereces todo lo bueno que la vida tiene preparado para ti. Gracias por la confianza; no sabes cuánto valoro esta amistad. Es de esas que enseñan, que suman y que crecen con el tiempo. Lo más bonito es que aprendemos juntos, a nuestro ritmo, entre risas, conversaciones sinceras y apoyo real. Te quiero mucho y le pido a Dios que esto no se acabe, que siga siendo así de bonito y verdadero. Recuerda siempre que puedes confiar en mí. Tienes a un amigo que no es perfecto, pero que todos los días intenta ser mejor, para él y para las personas que quiere, como tú. Pásala muy bien esta Navidad, dale un abrazo grande también a tus papis. Ojalá vengan muchas Navidades más, aunque sea en comunión virtual, con mensajes largos y risas incluidas. Posdata: prepárate para el canotaje… yo ya me imaginé chapando mi trucha como todo un campeón, aunque seguro el río tenga otros planes. Sigue brillando, estrella, pero recuerda que hay una luna delante de ti; no es para opacarla, es para hacerla aún más hermosa, y tú lo haces sin darte cuenta. Feliz Navidad y próspero Año Nuevo. 🎄✨',
-                    password: 'Mi estrella' // Cambia esta contraseña
-        }
+                password: 'Mi estrella' // Cambia esta contraseña
+            }
         };
 
-       let currentPerson = '';
+        let currentPerson = '';
 
         function openModal(person) {
             currentPerson = person;
@@ -309,6 +174,10 @@
             const music = document.getElementById('christmasMusic');
             messageModal.style.display = 'none';
             music.pause();
+            isMusicPlaying = false;
+            document.getElementById('playIcon').style.display = 'block';
+            document.getElementById('pauseIcon').style.display = 'none';
+            document.getElementById('musicControl').classList.remove('playing');
         }
 
         function checkPassword() {
@@ -329,17 +198,21 @@
             const title = document.getElementById('modal-title');
             const message = document.getElementById('modal-message');
             const music = document.getElementById('christmasMusic');
-            
+
             title.textContent = messages[currentPerson].title;
             message.textContent = messages[currentPerson].message;
-            
+
             messageModal.style.display = 'flex';
             music.play();
+            isMusicPlaying = true;
+            document.getElementById('playIcon').style.display = 'none';
+            document.getElementById('pauseIcon').style.display = 'block';
+            document.getElementById('musicControl').classList.add('playing');
         }
 
         // Permitir Enter para enviar
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('passwordInput').addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
                     checkPassword();
                 }
@@ -347,4 +220,5 @@
         });
     </script>
 </body>
+
 </html>
